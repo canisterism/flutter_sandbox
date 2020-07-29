@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   app_review: ^1.1.2
+  rate_my_app: ^0.6.1+6
 
 dev_dependencies:
   flutter_test:

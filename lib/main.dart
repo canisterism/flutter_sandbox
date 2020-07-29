@@ -1,9 +1,13 @@
-import 'package:app_review/app_review.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sandbox/routes.dart';
 import 'package:flutter_sandbox/screens/app_review.dart';
+import 'package:flutter_sandbox/screens/rate_my_app.dart';
 
-void main() => runApp(new MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
@@ -12,23 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: const HomeScreen(),
-      theme: ThemeData(
-        primarySwatch: MaterialColor(
-          0xFFFFFFFF,
-          const <int, Color>{
-            50: const Color(0xFFFFFFFF),
-            100: const Color(0xFFFFFFFF),
-            200: const Color(0xFFFFFFFF),
-            300: const Color(0xFFFFFFFF),
-            400: const Color(0xFFFFFFFF),
-            500: const Color(0xFFFFFFFF),
-            600: const Color(0xFFFFFFFF),
-            700: const Color(0xFFFFFFFF),
-            800: const Color(0xFFFFFFFF),
-            900: const Color(0xFFFFFFFF),
-          },
-        ),
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       routes: routes,
     );
   }
@@ -42,7 +30,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Widget> _children = [AppReviewScreen()];
+  final List<Widget> _children = [AppReviewScreen(), RateMyAppScreen()];
 
   int _currentIndex = 0;
 
@@ -62,6 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
           items: [
             BottomNavigationBarItem(
                 icon: Icon(Icons.touch_app), title: Text('app_review')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.touch_app), title: Text('rate_my_app')),
           ]),
     );
   }
