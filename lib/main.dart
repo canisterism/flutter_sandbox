@@ -1,115 +1,68 @@
 import 'package:app_review/app_review.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sandbox/routes.dart';
+import 'package:flutter_sandbox/screens/app_review.dart';
 
 void main() => runApp(new MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => new _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  initState() {
-    super.initState();
-    AppReview.getAppID.then((onValue) {
-      setState(() {
-        appID = onValue;
-      });
-      print("App ID" + appID);
-    });
-  }
-
-  String appID = "";
-  String output = "";
+class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('App Review'),
-        ),
-        body: new SingleChildScrollView(
-          child: new ListBody(
-            children: <Widget>[
-              new Container(
-                height: 40.0,
-              ),
-              new ListTile(
-                leading: new Icon(Icons.info),
-                title: new Text('App ID'),
-                subtitle: new Text(appID),
-                onTap: () {
-                  AppReview.getAppID.then((onValue) {
-                    setState(() {
-                      output = onValue;
-                    });
-                    print(onValue);
-                  });
-                },
-              ),
-              new Divider(
-                height: 20.0,
-              ),
-              new ListTile(
-                leading: new Icon(
-                  Icons.shop,
-                ),
-                title: new Text('View Store Page'),
-                onTap: () {
-                  AppReview.storeListing.then((onValue) {
-                    setState(() {
-                      output = onValue;
-                    });
-                    print(onValue);
-                  });
-                },
-              ),
-              new Divider(
-                height: 20.0,
-              ),
-              new ListTile(
-                leading: new Icon(
-                  Icons.star,
-                ),
-                title: new Text('Request Review'),
-                onTap: () {
-                  AppReview.requestReview.then((onValue) {
-                    setState(() {
-                      output = onValue;
-                    });
-                    print(onValue);
-                  });
-                },
-              ),
-              new Divider(
-                height: 20.0,
-              ),
-              new ListTile(
-                leading: new Icon(
-                  Icons.note_add,
-                ),
-                title: new Text('Write a New Review'),
-                onTap: () {
-                  AppReview.writeReview.then((onValue) {
-                    setState(() {
-                      output = onValue;
-                    });
-                    print(onValue);
-                  });
-                },
-              ),
-              new Divider(
-                height: 20.0,
-              ),
-              new ListTile(
-                title: new Text(output),
-              ),
-            ],
-          ),
+    return MaterialApp(
+      home: const HomeScreen(),
+      theme: ThemeData(
+        primarySwatch: MaterialColor(
+          0xFFFFFFFF,
+          const <int, Color>{
+            50: const Color(0xFFFFFFFF),
+            100: const Color(0xFFFFFFFF),
+            200: const Color(0xFFFFFFFF),
+            300: const Color(0xFFFFFFFF),
+            400: const Color(0xFFFFFFFF),
+            500: const Color(0xFFFFFFFF),
+            600: const Color(0xFFFFFFFF),
+            700: const Color(0xFFFFFFFF),
+            800: const Color(0xFFFFFFFF),
+            900: const Color(0xFFFFFFFF),
+          },
         ),
       ),
+      routes: routes,
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key key}) : super(key: key);
+  static final routeName = '/home';
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final List<Widget> _children = [AppReviewScreen()];
+
+  int _currentIndex = 0;
+
+  _onTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _children[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: _onTapped,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.touch_app), title: Text('app_review')),
+          ]),
     );
   }
 }
